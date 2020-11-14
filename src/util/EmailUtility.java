@@ -17,9 +17,9 @@ public class EmailUtility {
 
         try {
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("philipjf.hw@gmail.com", "Example.com Admin"));
+            msg.setFrom(new InternetAddress("philipjf.hw@gmail.com", "PS5 Availability Checker"));
             msg.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress("philipjf.hw+ps5availabilitychecker@gmail.com", "Mr. User"));
+                    new InternetAddress("philipjf.hw+ps5availabilitychecker@gmail.com", "Philip"));
             msg.setSubject(emailSubject);
             msg.setText(emailText);
             Transport.send(msg);

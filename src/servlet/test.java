@@ -10,6 +10,7 @@ import java.util.Random;
 import com.google.appengine.api.datastore.Entity;
 import model.Product;
 import network.JbHifi;
+import network.MightyApe;
 import network.NoelLeeming;
 import network.TheWarehouse;
 import util.DataUtility;
@@ -49,12 +50,19 @@ public class test extends HttpServlet{
             String jbHifiAvailability = jbHifi.checkAvailability();
             resp.getWriter().println("JB Hi-Fi: " + jbHifiAvailability);
 
+            MightyApe mightyApe = new MightyApe(product.getMightyApeUrl(), userAgent);
+            String mightyApeAvailability = mightyApe.checkAvailability();
+            resp.getWriter().println("MightyApe: " + mightyApeAvailability);
+
             if (noelLeemingAvailability.equals("Available")
                     ||noelLeemingAvailability.equals("Preorder available")
                     ||theWarehouseAvailability.equals("Available")
                     ||theWarehouseAvailability.equals("Preorder available")
                     ||jbHifiAvailability.contains("Available")
-                    ||jbHifiAvailability.contains("Preorder available")){
+                    ||jbHifiAvailability.contains("Preorder available")
+                    ||mightyApeAvailability.equals("Available")
+                    ||mightyApeAvailability.equals("Preorder available")
+                    ||mightyApeAvailability.equals("On backorder")){
                 String emailText = "Noel Leeming: " + noelLeemingAvailability
                         + "\n" + "The Warehouse: " + theWarehouseAvailability
                         + "\n" + "JB Hi-Fi: " + jbHifiAvailability;
