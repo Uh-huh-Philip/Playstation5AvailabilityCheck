@@ -9,6 +9,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="com.google.code.gson:gson:2.8.6" />
+          <element id="library" level="project" name="com.google.appengine:appengine-api-1.0-sdk:1.9.83" />
         </element>
       </element>
     </root>
