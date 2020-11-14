@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.google.gson.JsonObject;
 import model.Product;
 import network.NoelLeeming;
 import network.TheWarehouse;
@@ -20,6 +19,8 @@ public class test extends HttpServlet{
 
         resp.setContentType("text/plain");
         for (Product product: DataUtility.retrieveProduct()){
+            resp.getWriter().println(product.getProductName());
+
             String noelleemingSku = product.getNoelleemingSku();
             NoelLeeming noelLeeming = new NoelLeeming(noelleemingSku);
             resp.getWriter().println("Noel Leeming:" + noelLeeming.checkAvailability());
