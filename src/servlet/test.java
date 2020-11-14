@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import model.Product;
+import network.JbHifi;
 import network.NoelLeeming;
 import network.TheWarehouse;
 import util.DataUtility;
@@ -28,6 +29,10 @@ public class test extends HttpServlet{
             String thewarehousePid = product.getThewarehousePid();
             TheWarehouse theWarehouse = new TheWarehouse(thewarehousePid);
             resp.getWriter().println("The Warehouse:" + theWarehouse.checkAvailability());
+
+            String jbhifiId = product.getJbhifiId();
+            JbHifi jbHifi = new JbHifi(jbhifiId);
+            resp.getWriter().println("JB Hi-Fi:" + jbHifi.checkAvailability());
         }
     }
 }

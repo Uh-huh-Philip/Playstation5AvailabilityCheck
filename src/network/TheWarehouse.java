@@ -48,8 +48,10 @@ public class TheWarehouse {
                                 .get("isCurrentlyUnavailableOnline")
                                 .getAsBoolean())
                             availability = "Preorder available";
+                        break;
                     case "IN_STOCK":
                         availability = "Available";
+                        break;
                 }
             }
         }
