@@ -14,7 +14,7 @@ import static network.GetResultAsJson.getJsonObject;
 public class NoelLeeming {
 
     private final JsonObject data = JsonParser.parseString("{\"sectionId\":8770662,\"skus\":[],\"timeframes\":[\"weekly\"],\"includeProductInterest\":\"view\",\"includeProductData\":true}").getAsJsonObject();
-    private String noelleemingSku;
+    private final String noelleemingSku;
 
     public NoelLeeming(String noelleemingSku) {
         this.noelleemingSku = noelleemingSku;

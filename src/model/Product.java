@@ -1,7 +1,5 @@
 package model;
 
-import java.net.URL;
-
 public class Product {
     private final String productName;
     private final String thewarehousePid;
