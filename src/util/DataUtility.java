@@ -4,6 +4,8 @@ import com.google.appengine.api.datastore.*;
 import model.Product;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DataUtility {
@@ -21,5 +23,18 @@ public class DataUtility {
                     product.getProperty("mightyApeUrl").toString()));
         }
         return productArrayList;
+    }
+
+    public static void putData(String productName, String retailer, String status) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Transaction txn = datastore.beginTransaction();
+        Date date = Calendar.getInstance().getTime();
+        Entity availability = new Entity("availability");
+        availability.setProperty("productName", productName);
+        availability.setProperty("retailer", retailer);
+        availability.setProperty("status", status);
+        availability.setProperty("time", date);
+        datastore.put(txn, availability);
+        txn.commit();
     }
 }
