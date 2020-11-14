@@ -7,9 +7,9 @@ public class Product {
     private final String thewarehousePid;
     private final String noelleemingSku;
     private final String jbhifiId;
-    private final URL mightyApeUrl;
+    private final String mightyApeUrl;
 
-    public Product(String productName, String thewarehousePid, String noelleemingSku, String jbhifiId, URL mightyApeUrl) {
+    public Product(String productName, String thewarehousePid, String noelleemingSku, String jbhifiId, String mightyApeUrl) {
         this.productName = productName;
         this.thewarehousePid = thewarehousePid;
         this.noelleemingSku = noelleemingSku;
@@ -33,7 +33,7 @@ public class Product {
         return jbhifiId;
     }
 
-    public URL getMightyApeUrl() {
+    public String getMightyApeUrl() {
         return mightyApeUrl;
     }
 }

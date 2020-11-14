@@ -6,36 +6,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import com.google.gson.JsonObject;
-import fetch.NoelLeeming;
+import model.Product;
+import network.NoelLeeming;
+import network.TheWarehouse;
+import util.DataUtility;
+
 
 public class test extends HttpServlet{
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String noelleemingSku = "200475";
-        NoelLeeming noelLeeming = new NoelLeeming(noelleemingSku);
-        JsonObject noelLeemingData = noelLeeming.fetchData();
-        String availability = "Unknown";
-        if (noelLeemingData.getAsJsonObject(noelleemingSku)
-                .getAsJsonObject("productData")
-                .get("in_stock")
-                .getAsString().equals("false")){
-            if (noelLeemingData.getAsJsonObject(noelleemingSku)
-                    .getAsJsonObject("productData")
-                    .get("add_to_cart")
-                    .getAsString().equals("false"))
-                availability = "Unavailable";
-            else if (noelLeemingData.getAsJsonObject(noelleemingSku)
-                    .getAsJsonObject("productData")
-                    .get("add_to_cart")
-                    .getAsString().equals("true"))
-                availability = "Preorder available";
-        }else if (noelLeemingData.getAsJsonObject(noelleemingSku)
-                .getAsJsonObject("productData")
-                .get("in_stock")
-                .getAsString().equals("true"))
-            availability = "Available";
+
+
         resp.setContentType("text/plain");
-        resp.getWriter().println(availability);
+        for (Product product: DataUtility.retrieveProduct()){
+            String noelleemingSku = product.getNoelleemingSku();
+            NoelLeeming noelLeeming = new NoelLeeming(noelleemingSku);
+            resp.getWriter().println("Noel Leeming:" + noelLeeming.checkAvailability());
+
+            String thewarehousePid = product.getThewarehousePid();
+            TheWarehouse theWarehouse = new TheWarehouse(thewarehousePid);
+            resp.getWriter().println("The Warehouse:" + theWarehouse.checkAvailability());
+        }
     }
 }

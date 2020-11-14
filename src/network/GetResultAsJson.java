@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 public class GetResultAsJson {
 
     static JsonObject getJsonObject(HttpURLConnection urlConnection) throws IOException {
-        JsonObject jsonObject = null;
+        JsonObject jsonObject;
         StringBuilder result = new StringBuilder();
         InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
