@@ -64,10 +64,10 @@ public class JbHifi {
                 }
                 switch (product.get("PickupStatus").getAsString()){
                     case "In Stock":
-                        availabilityInStore += ", Available";
+                        availabilityInStore = ", Available";
                         break;
                     case "Pre-Order":
-                        availabilityInStore += ", Preorder available";
+                        availabilityInStore = ", Preorder available";
                         break;
                 }
             }
