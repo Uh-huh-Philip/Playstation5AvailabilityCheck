@@ -48,6 +48,7 @@ public class NoelLeeming {
     }
 
     public String checkAvailability(){
+        String availability = "Unavailable";
         if (this.noelleemingSku != null){
             JsonObject product = fetchData();
             if (product!=null) {
@@ -58,20 +59,15 @@ public class NoelLeeming {
                     if (product.getAsJsonObject(noelleemingSku)
                             .getAsJsonObject("productData")
                             .get("add_to_cart")
-                            .getAsString().equals("false"))
-                        return  "Unavailable";
-                    else if (product.getAsJsonObject(noelleemingSku)
-                            .getAsJsonObject("productData")
-                            .get("add_to_cart")
                             .getAsString().equals("true"))
-                        return  "Preorder available";
+                        availability = "Preorder available";
                 }else if (product.getAsJsonObject(noelleemingSku)
                         .getAsJsonObject("productData")
                         .get("in_stock")
                         .getAsString().equals("true"))
-                    return "Available";
-            } else return "Unknown";
+                    availability = "Available";
+            }
         }
-        return "Unknown";
+        return availability;
     }
 }

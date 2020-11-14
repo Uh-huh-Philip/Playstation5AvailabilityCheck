@@ -1,6 +1,7 @@
 package servlet;
 
 import network.TheWarehouse;
+import util.EmailUtility;
 import util.RandomUserAgent;
 
 import javax.servlet.http.HttpServlet;
@@ -17,5 +18,7 @@ public class update extends HttpServlet {
         String thewarehousePid = "R2695124";
         TheWarehouse theWarehouse = new TheWarehouse(thewarehousePid, userAgent);
         resp.getWriter().println("The Warehouse: " + theWarehouse.checkAvailability());
+
+        //EmailUtility.sendEmail();
     }
 }

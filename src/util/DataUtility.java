@@ -10,19 +10,19 @@ import java.util.List;
 
 public class DataUtility {
 
-    public static ArrayList<Product> retrieveProduct() {
+    public static List<Entity> retrieveProduct() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query("Product");
+        List<Entity> productEntityList = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
         ArrayList<Product> productArrayList = new ArrayList<Product>();
-        List<Entity> products = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
-        for (Entity product : products) {
+        for (Entity product : productEntityList) {
             productArrayList.add(new Product(product.getProperty("productName").toString(),
                     product.getProperty("thewarehousePid").toString(),
                     product.getProperty("noelleemingSku").toString(),
                     product.getProperty("jbhifiId").toString(),
                     product.getProperty("mightyApeUrl").toString()));
         }
-        return productArrayList;
+        return productEntityList;
     }
 
     public static void putData(String productName, String retailer, String status) {
