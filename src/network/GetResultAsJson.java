@@ -1,5 +1,7 @@
 package network;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -9,7 +11,7 @@ import java.net.HttpURLConnection;
 public class GetResultAsJson {
 
     static JsonObject getJsonObject(HttpURLConnection urlConnection) throws IOException {
-        JsonObject jsonObject;
+        JsonObject jsonObject = null;
         StringBuilder result = new StringBuilder();
         InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -21,7 +23,10 @@ public class GetResultAsJson {
         }
         reader.close();
 
-        jsonObject = (JsonObject) JsonParser.parseString(result.toString());
+        JsonElement element = JsonParser.parseString(result.toString());
+        if (!(element instanceof JsonNull)) {
+            jsonObject = (JsonObject) element;
+        }
 
         System.out.println(jsonObject);
         return jsonObject;
