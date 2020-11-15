@@ -1,0 +1,4 @@
+cron:
+  - description: "Check Availability"
+    url: /update
+    schedule: every 2 mins

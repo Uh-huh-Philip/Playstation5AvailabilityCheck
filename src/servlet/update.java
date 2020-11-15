@@ -27,7 +27,7 @@ public class update extends HttpServlet {
         List<Entity> stockStatus = new ArrayList<>();
 
         resp.setContentType("text/plain");
-        for (Entity productEntity: DataUtility.retrieveProduct()){
+        for (Entity productEntity: DataUtility.retrieveEntities("Product")){
             Product product = new Product(productEntity.getProperty("productName").toString(),
                     productEntity.getProperty("thewarehousePid").toString(),
                     productEntity.getProperty("noelleemingSku").toString(),
@@ -70,11 +70,15 @@ public class update extends HttpServlet {
                     ||mightyApeAvailability.equals("Available")
                     ||mightyApeAvailability.equals("Preorder available")
                     ||mightyApeAvailability.equals("On backorder")){
-                String emailText = "Noel Leeming: " + noelLeemingAvailability
-                        + "\n" + "The Warehouse: " + theWarehouseAvailability
-                        + "\n" + "JB Hi-Fi: " + jbHifiAvailability;
-                String emailSubject = product.getProductName() + " is Available Online!";
-                EmailUtility.sendEmail(emailSubject,emailText);
+                if(!(boolean)productEntity.getProperty("online")) {
+                    productEntity.setProperty("online", true);
+                    DataUtility.updateStock(productEntity);
+                    String emailText = "Noel Leeming: " + noelLeemingAvailability
+                            + "\n" + "The Warehouse: " + theWarehouseAvailability
+                            + "\n" + "JB Hi-Fi: " + jbHifiAvailability;
+                    String emailSubject = product.getProductName() + " is Available Online!";
+                    EmailUtility.sendEmail(emailSubject, emailText);
+                }
             }
         }
 

@@ -1,5 +1,7 @@
 package util;
 
+import com.google.appengine.api.datastore.Entity;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -15,20 +17,22 @@ public class EmailUtility {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
 
-        try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("no-reply@ornate-variety-294006.appspotmail.com", "PS5 Availability Checker"));
-            msg.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress("philipjf.hw+ps5availabilitychecker@gmail.com", "Philip"));
-            msg.setSubject(emailSubject);
-            msg.setText(emailText);
-            Transport.send(msg);
-        } catch (AddressException e) {
-            // ...
-        } catch (MessagingException e) {
-            // ...
-        } catch (UnsupportedEncodingException e) {
-            // ...
+        for (Entity recipientEntity: DataUtility.retrieveEntities("Recipient")) {
+            try {
+                Message msg = new MimeMessage(session);
+                msg.setFrom(new InternetAddress("no-reply@ornate-variety-294006.appspotmail.com", "PS5 Availability Checker"));
+                msg.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress(recipientEntity.getProperty("emailAddress").toString(), recipientEntity.getProperty("fullName").toString()));
+                msg.setSubject(emailSubject);
+                msg.setText(emailText);
+                Transport.send(msg);
+            } catch (AddressException e) {
+                // ...
+            } catch (MessagingException e) {
+                // ...
+            } catch (UnsupportedEncodingException e) {
+                // ...
+            }
         }
     }
 }

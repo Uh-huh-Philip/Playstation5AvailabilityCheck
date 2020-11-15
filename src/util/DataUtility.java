@@ -11,19 +11,24 @@ import java.util.List;
 
 public class DataUtility {
 
-    public static List<Entity> retrieveProduct() {
+    public static List<Entity> retrieveEntities(String kind) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Query query = new Query("Product");
-        List<Entity> productEntityList = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
-        ArrayList<Product> productArrayList = new ArrayList<Product>();
-        for (Entity product : productEntityList) {
-            productArrayList.add(new Product(product.getProperty("productName").toString(),
-                    product.getProperty("thewarehousePid").toString(),
-                    product.getProperty("noelleemingSku").toString(),
-                    product.getProperty("jbhifiId").toString(),
-                    product.getProperty("mightyApeUrl").toString()));
-        }
-        return productEntityList;
+        Query query = new Query(kind);
+        List<Entity> entityList = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+//        ArrayList<Product> productArrayList = new ArrayList<Product>();
+//        for (Entity product : productEntityList) {
+//            productArrayList.add(new Product(product.getProperty("productName").toString(),
+//                    product.getProperty("thewarehousePid").toString(),
+//                    product.getProperty("noelleemingSku").toString(),
+//                    product.getProperty("jbhifiId").toString(),
+//                    product.getProperty("mightyApeUrl").toString()));
+//        }
+        return entityList;
+    }
+
+    public static void updateStock(Entity product) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(product);
     }
 
     public static void updateStock(List<Entity> stockStatus) {
