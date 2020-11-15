@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class update extends HttpServlet {
     @Override
@@ -35,25 +36,27 @@ public class update extends HttpServlet {
             String noelleemingSku = product.getNoelleemingSku();
             NoelLeeming noelLeeming = new NoelLeeming(noelleemingSku);
             String noelLeemingAvailability = noelLeeming.checkAvailability();
-            DataUtility.updateStock(productEntity.getKey(),"Noel Leeming", noelLeemingAvailability);
             resp.getWriter().println("Noel Leeming: " + noelLeemingAvailability);
 
             String thewarehousePid = product.getThewarehousePid();
             TheWarehouse theWarehouse = new TheWarehouse(thewarehousePid, userAgent);
             String theWarehouseAvailability = theWarehouse.checkAvailability();
-            DataUtility.updateStock(productEntity.getKey(),"The Warehouse", theWarehouseAvailability);
             resp.getWriter().println("The Warehouse: " + theWarehouseAvailability);
 
             String jbhifiId = product.getJbhifiId();
             JbHifi jbHifi = new JbHifi(jbhifiId);
             String jbHifiAvailability = jbHifi.checkAvailability();
-            DataUtility.updateStock(productEntity.getKey(),"JB Hi-Fi", jbHifiAvailability);
             resp.getWriter().println("JB Hi-Fi: " + jbHifiAvailability);
 
             MightyApe mightyApe = new MightyApe(product.getMightyApeUrl(), userAgent);
             String mightyApeAvailability = mightyApe.checkAvailability();
-            DataUtility.updateStock(productEntity.getKey(),"MightyApe", mightyApeAvailability);
             resp.getWriter().println("MightyApe: " + mightyApeAvailability);
+
+            DataUtility.updateStock(Arrays.asList(
+                    DataUtility.stockStatusBuilder(productEntity.getKey(),"Noel Leeming", noelLeemingAvailability),
+                    DataUtility.stockStatusBuilder(productEntity.getKey(),"The Warehouse", theWarehouseAvailability),
+                    DataUtility.stockStatusBuilder(productEntity.getKey(),"JB Hi-Fi", jbHifiAvailability),
+                    DataUtility.stockStatusBuilder(productEntity.getKey(),"MightyApe", mightyApeAvailability)));
 
             if (noelLeemingAvailability.equals("Available")
                     ||noelLeemingAvailability.equals("Preorder available")
@@ -72,4 +75,5 @@ public class update extends HttpServlet {
             }
         }
     }
+
 }

@@ -1,6 +1,7 @@
 package servlet;
 
 import network.MightyApe;
+import util.DataUtility;
 import util.EmailUtility;
 import util.RandomUserAgent;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 
 public class test extends HttpServlet{
@@ -22,5 +24,6 @@ public class test extends HttpServlet{
         resp.getWriter().println("MightyApe: " + mightyApe.checkAvailability());
 
         EmailUtility.sendEmail("MightyApe: " + mightyApe.checkAvailability(),"");
+        DataUtility.updateStock(Arrays.asList(DataUtility.stockStatusBuilder(null, "MightyApe", mightyApe.checkAvailability())));
     }
 }

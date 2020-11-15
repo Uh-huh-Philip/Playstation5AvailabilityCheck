@@ -1,6 +1,7 @@
 package util;
 
 import com.google.appengine.api.datastore.*;
+import com.sun.istack.internal.Nullable;
 import model.Product;
 
 import java.util.ArrayList;
@@ -25,15 +26,34 @@ public class DataUtility {
         return productEntityList;
     }
 
-    public static void updateStock(Key parent, String retailer, String status) {
+    public static void updateStock(List<Entity> stockStatus) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Transaction txn = datastore.beginTransaction();
+        //Transaction txn = datastore.beginTransaction();
+//        Date date = Calendar.getInstance().getTime();
+//        Entity stockStatus;
+//        if (parent != null)
+//            stockStatus = new Entity("StockStatus",parent);
+//        else
+//            stockStatus = new Entity("StockStatus");
+//        stockStatus.setProperty("retailer", retailer);
+//        stockStatus.setProperty("status", status);
+//        stockStatus.setProperty("time", date);
+        //datastore.put(txn, stockStatus);
+        //txn.commit();
+        datastore.put(stockStatus);
+    }
+
+
+    public static Entity stockStatusBuilder(@Nullable Key parent, String retailer, String status){
         Date date = Calendar.getInstance().getTime();
-        Entity stockStatus = new Entity("StockStatus",parent);
+        Entity stockStatus;
+        if (parent != null)
+            stockStatus = new Entity("StockStatus",parent);
+        else
+            stockStatus = new Entity("StockStatus");
         stockStatus.setProperty("retailer", retailer);
         stockStatus.setProperty("status", status);
         stockStatus.setProperty("time", date);
-        datastore.put(txn, stockStatus);
-        txn.commit();
+        return stockStatus;
     }
 }
