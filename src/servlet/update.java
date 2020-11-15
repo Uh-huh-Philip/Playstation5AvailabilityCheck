@@ -75,10 +75,18 @@ public class update extends HttpServlet {
                     DataUtility.updateStock(productEntity);
                     String emailText = "Noel Leeming: " + noelLeemingAvailability
                             + "\n" + "The Warehouse: " + theWarehouseAvailability
-                            + "\n" + "JB Hi-Fi: " + jbHifiAvailability;
+                            + "\n" + "JB Hi-Fi: " + jbHifiAvailability
+                            + "\n" + "JB Hi-Fi: " + mightyApeAvailability;
                     String emailSubject = product.getProductName() + " is Available Online!";
                     EmailUtility.sendEmail(emailSubject, emailText);
                 }
+            } else if (noelLeemingAvailability.equals("Unavailable")
+                    &&theWarehouseAvailability.equals("Unavailable")
+                    &&jbHifiAvailability.contains("Unavailable")
+                    &&mightyApeAvailability.equals("On backorder")
+                    &&(boolean)productEntity.getProperty("online")){
+                productEntity.setProperty("online", false);
+                DataUtility.updateStock(productEntity);
             }
         }
 
