@@ -25,16 +25,15 @@ public class DataUtility {
         return productEntityList;
     }
 
-    public static void putData(String productName, String retailer, String status) {
+    public static void updateStock(Key parent, String retailer, String status) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Transaction txn = datastore.beginTransaction();
         Date date = Calendar.getInstance().getTime();
-        Entity availability = new Entity("availability");
-        availability.setProperty("productName", productName);
-        availability.setProperty("retailer", retailer);
-        availability.setProperty("status", status);
-        availability.setProperty("time", date);
-        datastore.put(txn, availability);
+        Entity stockStatus = new Entity("StockStatus",parent);
+        stockStatus.setProperty("retailer", retailer);
+        stockStatus.setProperty("status", status);
+        stockStatus.setProperty("time", date);
+        datastore.put(txn, stockStatus);
         txn.commit();
     }
 }
