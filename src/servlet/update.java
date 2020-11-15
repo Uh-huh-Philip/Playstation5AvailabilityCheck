@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class update extends HttpServlet {
     @Override
@@ -22,6 +24,7 @@ public class update extends HttpServlet {
             throws IOException {
 
         String userAgent = RandomUserAgent.getRandomUserAgent();
+        List<Entity> stockStatus = new ArrayList<>();
 
         resp.setContentType("text/plain");
         for (Entity productEntity: DataUtility.retrieveProduct()){
@@ -52,7 +55,7 @@ public class update extends HttpServlet {
             String mightyApeAvailability = mightyApe.checkAvailability();
             resp.getWriter().println("MightyApe: " + mightyApeAvailability);
 
-            DataUtility.updateStock(Arrays.asList(
+            stockStatus.addAll(Arrays.asList(
                     DataUtility.stockStatusBuilder(productEntity.getKey(),"Noel Leeming", noelLeemingAvailability),
                     DataUtility.stockStatusBuilder(productEntity.getKey(),"The Warehouse", theWarehouseAvailability),
                     DataUtility.stockStatusBuilder(productEntity.getKey(),"JB Hi-Fi", jbHifiAvailability),
@@ -73,6 +76,10 @@ public class update extends HttpServlet {
                 String emailSubject = product.getProductName() + " is Available Online!";
                 EmailUtility.sendEmail(emailSubject,emailText);
             }
+        }
+
+        if (!stockStatus.isEmpty()){
+            DataUtility.updateStock(stockStatus);
         }
     }
 
