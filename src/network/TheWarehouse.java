@@ -1,6 +1,7 @@
 package network;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -31,6 +32,8 @@ public class TheWarehouse {
             jsonObject = getJsonObject(urlConnection);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
 

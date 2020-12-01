@@ -2,6 +2,7 @@ package network;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -41,6 +42,8 @@ public class NoelLeeming {
             jsonObject = getJsonObject(urlConnection);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
             e.printStackTrace();
         }
 

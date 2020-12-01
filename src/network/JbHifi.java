@@ -2,6 +2,7 @@ package network;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -43,6 +44,8 @@ public class JbHifi {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
         }
 
         return jsonObject;
@@ -64,10 +67,10 @@ public class JbHifi {
                 }
                 switch (product.get("PickupStatus").getAsString()){
                     case "In Stock":
-                        availabilityInStore = ", Available";
+                        availabilityInStore = "Available";
                         break;
                     case "Pre-Order":
-                        availabilityInStore = ", Preorder available";
+                        availabilityInStore = "Preorder available";
                         break;
                 }
             }

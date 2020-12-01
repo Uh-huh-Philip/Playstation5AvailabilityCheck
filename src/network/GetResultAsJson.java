@@ -1,16 +1,13 @@
 package network;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 
 public class GetResultAsJson {
 
-    static JsonObject getJsonObject(HttpURLConnection urlConnection) throws IOException {
+    static JsonObject getJsonObject(HttpURLConnection urlConnection) throws IOException, JsonSyntaxException {
         JsonObject jsonObject = null;
         StringBuilder result = new StringBuilder();
         InputStream in = new BufferedInputStream(urlConnection.getInputStream());

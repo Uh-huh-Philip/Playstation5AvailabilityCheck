@@ -1,10 +1,7 @@
 package util;
 
 import com.google.appengine.api.datastore.*;
-import com.sun.istack.internal.Nullable;
-import model.Product;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +46,7 @@ public class DataUtility {
     }
 
 
-    public static Entity stockStatusBuilder(@Nullable Key parent, String retailer, String status){
+    public static Entity stockStatusBuilder(Key parent, String retailer, String status){
         Date date = Calendar.getInstance().getTime();
         Entity stockStatus;
         if (parent != null)
