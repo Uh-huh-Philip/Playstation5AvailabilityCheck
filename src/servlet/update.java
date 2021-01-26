@@ -86,7 +86,7 @@ public class update extends HttpServlet {
                 } else if (noelLeemingAvailability.equals("Unavailable")
                         && theWarehouseAvailability.equals("Unavailable")
                         && jbHifiAvailability.contains("Unavailable")
-                        && mightyApeAvailability.equals("On backorder")
+                        && mightyApeAvailability.equals("Unavailable")
                         && (boolean) productEntity.getProperty("online")) {
                     productEntity.setProperty("online", false);
                     DataUtility.updateStock(productEntity);

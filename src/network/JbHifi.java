@@ -42,9 +42,7 @@ public class JbHifi {
 
             jsonObject = getJsonObject(urlConnection);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JsonSyntaxException e) {
+        } catch (IOException | JsonSyntaxException e) {
             e.printStackTrace();
         }
 
@@ -55,8 +53,10 @@ public class JbHifi {
         String availabilityOnline = "Unavailable";
         String availabilityInStore = "Unavailable";
         if (this.jbhifiId != null){
-            JsonObject product = fetchData().getAsJsonObject("Result").getAsJsonArray("Products").get(0).getAsJsonObject();
-            if (product!=null) {
+            JsonArray products= fetchData().getAsJsonObject("Result").getAsJsonArray("Products");
+//        JsonObject product = jsonData.getAsJsonObject("Result").getAsJsonArray("Products").get(0).getAsJsonObject();
+            if (products.size()>0) {
+                JsonObject product = products.get(0).getAsJsonObject();
                 switch (product.get("DeliveryStatus").getAsString()){
                     case "In Stock":
                         availabilityOnline = "Available";
