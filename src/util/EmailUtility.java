@@ -20,7 +20,7 @@ public class EmailUtility {
         for (Entity recipientEntity: DataUtility.retrieveEntities("Recipient")) {
             try {
                 Message msg = new MimeMessage(session);
-                msg.setFrom(new InternetAddress("no-reply@ornate-variety-294006.appspotmail.com", "PS5 Availability Checker"));
+                msg.setFrom(new InternetAddress("no-reply@[YOUR_PROJECT_ID].appspotmail.com", "PS5 Availability Checker"));
                 msg.addRecipient(Message.RecipientType.TO,
                         new InternetAddress(recipientEntity.getProperty("emailAddress").toString(), recipientEntity.getProperty("fullName").toString()));
                 msg.setSubject(emailSubject);
